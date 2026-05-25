@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KisanDirect - शेतातून थेट तुमच्या दारी</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* ── LANGUAGE TOGGLE ── */
+    .lang-toggle {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 2px solid #2d6a4f;
+      border-radius: 20px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #2d6a4f;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s;
+    }
+
+    .lang-btn.active,
+    .lang-btn:hover {
+      background: #2d6a4f;
+      color: #fff;
+    }
+
+    /* ── NAVBAR ── */
+    header {
+      background-color: #fff;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #2d6a4f;
+    }
+
+    .logo span { color: #f4a261; }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover { color: #2d6a4f; }
+
+    .nav-btn {
+      background-color: #2d6a4f;
+      color: #fff !important;
+      padding: 0.5rem 1.3rem;
+      border-radius: 30px;
+      font-weight: 600 !important;
+    }
+
+    .nav-btn:hover { background-color: #1b4332 !important; color: #fff !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 2px;
+      background: #333;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 50%, #fff 100%);
+      padding: 5rem 5%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      min-height: 90vh;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: #1b4332;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-text h1 span { color: #f4a261; }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background-color: #2d6a4f;
+      color: #fff;
+      padding: 0.9rem 2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+    }
+    .btn-primary:hover { background-color: #1b4332; transform: translateY(-2px); }
+
+    .btn-outline {
+      background-color: transparent;
+      color: #2d6a4f;
+      padding: 0.9rem 2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid #2d6a4f;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { background-color: #2d6a4f; color: #fff; transform: translateY(-2px); }
+
+    .hero-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* ── STATS ── */
+    #stats {
+      background-color: #2d6a4f;
+      padding: 3rem 5%;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item h3 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #f4a261;
+    }
+
+    .stat-item p {
+      color: #d8f3dc;
+      font-size: 0.95rem;
+      margin-top: 0.3rem;
+    }
+
+    /* ── SECTIONS ── */
+    #how {
+      padding: 5rem 5%;
+      text-align: center;
+      background-color: #f8f9fa;
+    }
+
+    .section-tag {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #2d6a4f;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: #1b4332;
+      margin-bottom: 3rem;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .step-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s;
+    }
+
+    .step-card:hover { transform: translateY(-6px); }
+
+    .step-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+    .step-num {
+      display: inline-block;
+      background: #d8f3dc;
+      color: #2d6a4f;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 999px;
+      margin-bottom: 0.8rem;
+    }
+
+    .step-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1b4332;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-card p { color: #777; font-size: 0.9rem; line-height: 1.6; }
+
+    /* ── PRODUCTS ── */
+    #products {
+      padding: 5rem 5%;
+      text-align: center;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: #f8f9fa;
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .product-card:hover {
+      border-color: #2d6a4f;
+      transform: translateY(-4px);
+      background: #d8f3dc;
+    }
+
+    .product-icon { font-size: 3rem; margin-bottom: 0.8rem; }
+
+    .product-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1b4332;
+      margin-bottom: 0.3rem;
+    }
+
+    .product-card p { color: #888; font-size: 0.85rem; }
+
+    .product-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #f4a261;
+      margin-top: 0.5rem;
+    }
+
+    /* ── FEATURES ── */
+    #features {
+      padding: 5rem 5%;
+      background: linear-gradient(135deg, #1b4332, #2d6a4f);
+      color: #fff;
+      text-align: center;
+    }
+
+    #features .section-title { color: #fff; }
+    #features .section-tag { color: #f4a261; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.3s;
+    }
+
+    .feature-card:hover { background: rgba(255,255,255,0.2); transform: translateY(-4px); }
+
+    .feature-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p { color: #b7e4c7; font-size: 0.9rem; line-height: 1.6; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials {
+      padding: 5rem 5%;
+      background: #f8f9fa;
+      text-align: center;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      text-align: left;
+    }
+
+    .stars { color: #f4a261; font-size: 1.2rem; margin-bottom: 1rem; }
+
+    .testimonial-card p {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #d8f3dc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .author-name { font-weight: 700; color: #1b4332; font-size: 0.95rem; }
+    .author-role { color: #888; font-size: 0.8rem; }
+
+    /* ── CTA ── */
+    #cta {
+      padding: 5rem 5%;
+      text-align: center;
+      background: #fff;
+    }
+
+    #cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: #1b4332;
+      margin-bottom: 1rem;
+    }
+
+    #cta p {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1b4332;
+      color: #b7e4c7;
+      padding: 2rem 5%;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    footer span { color: #f4a261; }
+
+    /* ── MEDIA QUERIES ── */
+    @media (max-width: 768px) {
+      #hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 4rem 5%;
+        min-height: auto;
+      }
+
+      .hero-text p { margin: 0 auto 2rem; }
+      .hero-btns { justify-content: center; }
+      .hero-image { font-size: 7rem; }
+
+      nav ul { display: none; }
+      nav ul.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 65px;
+        left: 0; right: 0;
+        background: #fff;
+        padding: 2rem;
+        gap: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
+
+      .hamburger { display: flex; }
+      #stats { flex-direction: column; align-items: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text h1 { font-size: 1.8rem; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="logo">Kisan<span>Direct</span> 🌾</div>
+    <nav>
+      <ul id="navMenu">
+        <li><a href="#hero" data-mr="मुख्यपान" data-hi="होम" data-en="Home">मुख्यपान</a></li>
+        <li><a href="#how" data-mr="कसे काम करतो" data-hi="कैसे काम करता है" data-en="How It Works">कसे काम करतो</a></li>
+        <li><a href="#products" data-mr="उत्पादने" data-hi="उत्पाद" data-en="Products">उत्पादने</a></li>
+        <li><a href="#features" data-mr="वैशिष्ट्ये" data-hi="विशेषताएं" data-en="Features">वैशिष्ट्ये</a></li>
+        <li><a href="#cta" class="nav-btn" data-mr="App डाउनलोड करा" data-hi="App डाउनलोड करें" data-en="Download App">App डाउनलोड करा</a></li>
+      </ul>
+    </nav>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('mr')">मराठी</button>
+      <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
+      <button class="lang-btn" onclick="setLang('en')">English</button>
+    </div>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-text">
+      <h1 data-mr="ताजी उत्पादने <span>थेट शेतातून</span> तुमच्या दारी! 🌱" data-hi="ताजे उत्पाद <span>सीधे खेत से</span> आपके दरवाजे पर! 🌱" data-en="Fresh Products <span>Direct From</span> Farmer to You! 🌱">ताजी उत्पादने <span>थेट शेतातून</span> तुमच्या दारी! 🌱</h1>
+      <p data-mr="KisanDirect स्थानिक शेतकऱ्यांना थेट ग्राहकांशी जोडतो. ताज्या भाज्या, फळे आणि धान्य तुमच्या दारापर्यंत पोहोचवतो — कोणताही दलाल नाही, चांगले भाव!" data-hi="KisanDirect स्थानीय किसानों को सीधे ग्राहकों से जोड़ता है। ताज़ी सब्जियां, फल और अनाज आपके दरवाजे तक पहुंचाता है — कोई बिचौलिया नहीं, बेहतर दाम!" data-en="KisanDirect connects local farmers directly with customers. Get fresh vegetables, fruits, and grains delivered to your doorstep — no middlemen, better prices!">KisanDirect स्थानिक शेतकऱ्यांना थेट ग्राहकांशी जोडतो. ताज्या भाज्या, फळे आणि धान्य तुमच्या दारापर्यंत पोहोचवतो — कोणताही दलाल नाही, चांगले भाव!</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn-primary" data-mr="🛒 आता खरेदी करा" data-hi="🛒 अभी खरीदें" data-en="🛒 Shop Now">🛒 आता खरेदी करा</a>
+        <a href="#how" class="btn-outline" data-mr="कसे काम करतो" data-hi="कैसे काम करता है" data-en="How It Works">कसे काम करतो</a>
+      </div>
+    </div>
+    <div class="hero-image">🌾</div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stat-item">
+      <h3>५००+</h3>
+      <p data-mr="स्थानिक शेतकरी" data-hi="स्थानीय किसान" data-en="Local Farmers">स्थानिक शेतकरी</p>
+    </div>
+    <div class="stat-item">
+      <h3>१०,०००+</h3>
+      <p data-mr="आनंदी ग्राहक" data-hi="खुश ग्राहक" data-en="Happy Customers">आनंदी ग्राहक</p>
+    </div>
+    <div class="stat-item">
+      <h3>५०+</h3>
+      <p data-mr="शहरे कव्हर" data-hi="शहर कवर" data-en="Cities Covered">शहरे कव्हर</p>
+    </div>
+    <div class="stat-item">
+      <h3>१००%</h3>
+      <p data-mr="ताजे व सेंद्रिय" data-hi="ताजा और जैविक" data-en="Fresh & Organic">ताजे व सेंद्रिय</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="section-tag" data-mr="सोपी प्रक्रिया" data-hi="सरल प्रक्रिया" data-en="Simple Process">सोपी प्रक्रिया</div>
+    <h2 class="section-title" data-mr="KisanDirect कसे काम करतो?" data-hi="KisanDirect कैसे काम करता है?" data-en="How KisanDirect Works?">KisanDirect कसे काम करतो?</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-icon">📱</div>
+        <div class="step-num" data-mr="पाऊल १" data-hi="चरण १" data-en="Step 1">पाऊल १</div>
+        <h3 data-mr="App डाउनलोड करा" data-hi="App डाउनलोड करें" data-en="Download App">App डाउनलोड करा</h3>
+        <p data-mr="Play Store किंवा App Store वरून KisanDirect app मोफत डाउनलोड करा." data-hi="Play Store या App Store से KisanDirect app मुफ्त डाउनलोड करें." data-en="Download KisanDirect app from Play Store or App Store for free.">Play Store किंवा App Store वरून KisanDirect app मोफत डाउनलोड करा.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🥦</div>
+        <div class="step-num" data-mr="पाऊल २" data-hi="चरण २" data-en="Step 2">पाऊल २</div>
+        <h3 data-mr="उत्पादने निवडा" data-hi="उत्पाद चुनें" data-en="Choose Products">उत्पादने निवडा</h3>
+        <p data-mr="जवळच्या शेतकऱ्यांकडून ताज्या भाज्या, फळे आणि धान्य पहा." data-hi="पास के किसानों से ताजी सब्जियां, फल और अनाज देखें." data-en="Browse fresh vegetables, fruits, and grains from local farmers near you.">जवळच्या शेतकऱ्यांकडून ताज्या भाज्या, फळे आणि धान्य पहा.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">💳</div>
+        <div class="step-num" data-mr="पाऊल ३" data-hi="चरण ३" data-en="Step 3">पाऊल ३</div>
+        <h3 data-mr="ऑर्डर द्या" data-hi="ऑर्डर दें" data-en="Place Order">ऑर्डर द्या</h3>
+        <p data-mr="Cart मध्ये टाका आणि UPI, Card किंवा Cash on Delivery ने पैसे द्या." data-hi="Cart में डालें और UPI, Card या Cash on Delivery से भुगतान करें." data-en="Add to cart and pay securely via UPI, Card, or Cash on Delivery.">Cart मध्ये टाका आणि UPI, Card किंवा Cash on Delivery ने पैसे द्या.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🚚</div>
+        <div class="step-num" data-mr="पाऊल ४" data-hi="चरण ४" data-en="Step 4">पाऊल ४</div>
+        <h3 data-mr="डिलिव्हरी मिळवा" data-hi="डिलीवरी पाएं" data-en="Get Delivery">डिलिव्हरी मिळवा</h3>
+        <p data-mr="२४ तासांत ताजी उत्पादने तुमच्या दारापर्यंत!" data-hi="२४ घंटे में ताजे उत्पाद आपके दरवाजे तक!" data-en="Fresh products delivered to your doorstep within 24 hours!">२४ तासांत ताजी उत्पादने तुमच्या दारापर्यंत!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="section-tag" data-mr="ताजा माल" data-hi="ताजा स्टॉक" data-en="Fresh Stock">ताजा माल</div>
+    <h2 class="section-title" data-mr="उपलब्ध ताजी उत्पादने" data-hi="उपलब्ध ताजे उत्पाद" data-en="Fresh Products Available">उपलब्ध ताजी उत्पादने</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-icon">🍅</div>
+        <h3 data-mr="टोमॅटो" data-hi="टमाटर" data-en="Tomatoes">टोमॅटो</h3>
+        <p data-mr="शेतातून ताजे" data-hi="खेत से ताजा" data-en="Fresh from farm">शेतातून ताजे</p>
+        <div class="product-price">₹३०/किलो</div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🥔</div>
+        <h3 data-mr="बटाटा" data-hi="आलू" data-en="Potatoes">बटाटा</h3>
+        <p data-mr="सेंद्रिय पीक" data-hi="जैविक उगाया" data-en="Organic grown">सेंद्रिय पीक</p>
+        <div class="product-price">₹२५/किलो</div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🌽</div>
+        <h3 data-mr="मका" data-hi="मक्का" data-en="Corn">मका</h3>
+        <p data-mr="गोड व ताजा" data-hi="मीठा और ताजा" data-en="Sweet & fresh">गोड व ताजा</p>
+        <div class="product-price">₹१५/नग</div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🥭</div>
+        <h3 data-mr="आंबा" data-hi="आम" data-en="Mangoes">आंबा</h3>
+        <p data-mr="हापूस जात" data-hi="अल्फांसो किस्म" data-en="Alphonso variety">हापूस जात</p>
+        <div class="product-price">₹१२०/किलो</div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🌾</div>
+        <h3 data-mr="गहू" data-hi="गेहूं" data-en="Wheat">गहू</h3>
+        <p data-mr="शुद्ध व नैसर्गिक" data-hi="शुद्ध और प्राकृतिक" data-en="Pure & natural">शुद्ध व नैसर्गिक</p>
+        <div class="product-price">₹४०/किलो</div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🧅</div>
+        <h3 data-mr="कांदा" data-hi="प्याज" data-en="Onions">कांदा</h3>
+        <p data-mr="स्थानिक पीक" data-hi="स्थानीय फसल" data-en="Local harvest">स्थानिक पीक</p>
+        <div class="product-price">₹२०/किलो</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-tag" data-mr="आम्हाला का निवडा" data-hi="हमें क्यों चुनें" data-en="Why Choose Us">आम्हाला का निवडा</div>
+    <h2 class="section-title" data-mr="KisanDirect का?" data-hi="KisanDirect क्यों?" data-en="Why KisanDirect?">KisanDirect का?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌱</div>
+        <h3 data-mr="१००% सेंद्रिय" data-hi="१००% जैविक" data-en="100% Organic">१००% सेंद्रिय</h3>
+        <p data-mr="सर्व उत्पादने हानिकारक कीटकनाशकांशिवाय नैसर्गिकरित्या पिकवलेली आहेत." data-hi="सभी उत्पाद हानिकारक कीटनाशकों के बिना प्राकृतिक रूप से उगाए गए हैं." data-en="All products are naturally grown without harmful pesticides or chemicals.">सर्व उत्पादने हानिकारक कीटकनाशकांशिवाय नैसर्गिकरित्या पिकवलेली आहेत.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3 data-mr="सर्वोत्तम भाव" data-hi="सबसे अच्छे दाम" data-en="Best Prices">सर्वोत्तम भाव</h3>
+        <p data-mr="दलाल नाही म्हणजे शेतकऱ्याला जास्त मिळते आणि तुम्हाला कमी पडते!" data-hi="बिचौलिया नहीं मतलब किसान को ज्यादा मिलता है और आप कम देते हैं!" data-en="No middlemen means farmers earn more and you pay less. Win-win!">दलाल नाही म्हणजे शेतकऱ्याला जास्त मिळते आणि तुम्हाला कमी पडते!</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3 data-mr="जलद डिलिव्हरी" data-hi="तेज डिलीवरी" data-en="Fast Delivery">जलद डिलिव्हरी</h3>
+        <p data-mr="शेतातून थेट घरापर्यंत त्याच दिवशी किंवा दुसऱ्या दिवशी डिलिव्हरी." data-hi="खेत से सीधे घर तक उसी दिन या अगले दिन डिलीवरी." data-en="Same day or next day delivery directly from farm to your home.">शेतातून थेट घरापर्यंत त्याच दिवशी किंवा दुसऱ्या दिवशी डिलिव्हरी.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👨‍🌾</div>
+        <h3 data-mr="शेतकऱ्यांना आधार" data-hi="किसानों का समर्थन" data-en="Support Farmers">शेतकऱ्यांना आधार</h3>
+        <p data-mr="प्रत्येक खरेदी थेट स्थानिक शेतकरी आणि त्यांच्या कुटुंबाला आधार देते." data-hi="हर खरीद सीधे स्थानीय किसानों और उनके परिवारों का समर्थन करती है." data-en="Every purchase directly supports local farmers and their families.">प्रत्येक खरेदी थेट स्थानिक शेतकरी आणि त्यांच्या कुटुंबाला आधार देते.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-tag" data-mr="अभिप्राय" data-hi="समीक्षाएं" data-en="Reviews">अभिप्राय</div>
+    <h2 class="section-title" data-mr="लोक काय म्हणतात" data-hi="लोग क्या कहते हैं" data-en="What People Say">लोक काय म्हणतात</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p data-mr="'अप्रतिम app! मला दररोज सकाळी बाजारभावाच्या निम्म्या किमतीत ताज्या भाज्या मिळतात. KisanDirect खूपच छान आहे!'" data-hi="'बेहतरीन app! मुझे हर सुबह बाजार से आधे दाम पर ताजी सब्जियां मिलती हैं। KisanDirect बहुत अच्छा है!'" data-en="'Amazing app! I get fresh vegetables every morning at half the market price. Highly recommend KisanDirect!'">'अप्रतिम app! मला दररोज सकाळी बाजारभावाच्या निम्म्या किमतीत ताज्या भाज्या मिळतात. KisanDirect खूपच छान आहे!'</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">👩</div>
+          <div>
+            <div class="author-name">प्रिया शर्मा</div>
+            <div class="author-role" data-mr="ग्राहक, पुणे" data-hi="ग्राहक, पुणे" data-en="Customer, Pune">ग्राहक, पुणे</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p data-mr="'KisanDirect मुळे मी थेट ग्राहकांना विकू शकतो. फक्त ३ महिन्यांत माझे उत्पन्न दुप्पट झाले!'" data-hi="'KisanDirect की वजह से मैं सीधे ग्राहकों को बेच सकता हूं। सिर्फ ३ महीनों में मेरी आमदनी दोगुनी हो गई!'" data-en="'KisanDirect helped me sell directly to customers. My income doubled in just 3 months!'">'KisanDirect मुळे मी थेट ग्राहकांना विकू शकतो. फक्त ३ महिन्यांत माझे उत्पन्न दुप्पट झाले!'</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">👨</div>
+          <div>
+            <div class="author-name">रमेश पाटील</div>
+            <div class="author-role" data-mr="शेतकरी, नाशिक" data-hi="किसान, नाशिक" data-en="Farmer, Nashik">शेतकरी, नाशिक</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p data-mr="'ताजी उत्पादने, चांगले भाव आणि जलद डिलिव्हरी. KisanDirect हे मी वापरलेले सर्वोत्तम grocery app आहे!'" data-hi="'ताजे उत्पाद, अच्छे दाम और तेज डिलीवरी। KisanDirect सबसे अच्छा grocery app है जो मैंने उपयोग किया है!'" data-en="'Fresh products, great prices, and fast delivery. KisanDirect is the best grocery app I have used!'">'ताजी उत्पादने, चांगले भाव आणि जलद डिलिव्हरी. KisanDirect हे मी वापरलेले सर्वोत्तम grocery app आहे!'</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">👦</div>
+          <div>
+            <div class="author-name">आकाश देसाई</div>
+            <div class="author-role" data-mr="ग्राहक, मुंबई" data-hi="ग्राहक, मुंबई" data-en="Customer, Mumbai">ग्राहक, मुंबई</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <h2 data-mr="आजच KisanDirect डाउनलोड करा! 🌾" data-hi="आज ही KisanDirect डाउनलोड करें! 🌾" data-en="Download KisanDirect Today! 🌾">आजच KisanDirect डाउनलोड करा! 🌾</h2>
+    <p data-mr="१०,०००+ आनंदी ग्राहक आणि ५००+ शेतकऱ्यांसोबत सामील व्हा. ताजी उत्पादने घरपोच मिळवा!" data-hi="१०,०००+ खुश ग्राहकों और ५००+ किसानों के साथ जुड़ें। ताजे उत्पाद घर पर पाएं!" data-en="Join 10,000+ happy customers and 500+ farmers. Get fresh products delivered to your door!">१०,०००+ आनंदी ग्राहक आणि ५००+ शेतकऱ्यांसोबत सामील व्हा. ताजी उत्पादने घरपोच मिळवा!</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a href="#" class="btn-primary" data-mr="📱 Play Store वर डाउनलोड करा" data-hi="📱 Play Store पर डाउनलोड करें" data-en="📱 Download on Play Store">📱 Play Store वर डाउनलोड करा</a>
+      <a href="#" class="btn-outline" data-mr="🍎 App Store वर डाउनलोड करा" data-hi="🍎 App Store पर डाउनलोड करें" data-en="🍎 Download on App Store">🍎 App Store वर डाउनलोड करा</a>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" style="padding:5rem 5%; background:#f8f9fa; text-align:center;">
+    <div class="section-tag" data-mr="संपर्क करा" data-hi="संपर्क करें" data-en="Contact Us">संपर्क करा</div>
+    <h2 class="section-title" data-mr="आमच्याशी संपर्क साधा" data-hi="हमसे संपर्क करें" data-en="Get In Touch">आमच्याशी संपर्क साधा</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; max-width:1000px; margin:0 auto;">
+
+      <!-- Shop Info -->
+      <div style="background:#fff; border-radius:16px; padding:2rem; box-shadow:0 4px 20px rgba(0,0,0,0.06); text-align:left; border-top:4px solid #2d6a4f;">
+        <div style="font-size:2rem; margin-bottom:1rem;">🏪</div>
+        <h3 style="color:#1b4332; font-size:1.2rem; font-weight:700; margin-bottom:1rem;" data-mr="दुकानाची माहिती" data-hi="दुकान की जानकारी" data-en="Shop Information">दुकानाची माहिती</h3>
+        <p style="font-weight:700; color:#2d6a4f; font-size:1rem; margin-bottom:0.5rem;">🌾 JAY BHARAT KIRAN STORE</p>
+        <p style="color:#555; font-size:0.9rem; margin-bottom:0.3rem;" data-mr="👤 मालक: Atharva Kathale" data-hi="👤 मालिक: Atharva Kathale" data-en="👤 Owner: Atharva Kathale">👤 मालक: Atharva Kathale</p>
+        <p style="color:#555; font-size:0.9rem; margin-bottom:0.3rem;">📞 <a href="tel:+918446006105" style="color:#2d6a4f; text-decoration:none; font-weight:600;">+91 8446006105</a></p>
+        <p style="color:#555; font-size:0.9rem;">📧 <a href="mailto:atharvakathale1212@gmail.com" style="color:#2d6a4f; text-decoration:none; font-weight:600;">atharvakathale1212@gmail.com</a></p>
+      </div>
+
+      <!-- Address -->
+      <div style="background:#fff; border-radius:16px; padding:2rem; box-shadow:0 4px 20px rgba(0,0,0,0.06); text-align:left; border-top:4px solid #f4a261;">
+        <div style="font-size:2rem; margin-bottom:1rem;">📍</div>
+        <h3 style="color:#1b4332; font-size:1.2rem; font-weight:700; margin-bottom:1rem;" data-mr="मुख्य पत्ता" data-hi="मुख्य पता" data-en="Main Address">मुख्य पत्ता</h3>
+        <p style="color:#555; font-size:0.95rem; line-height:1.8;">
+          JAY BHARAT KIRAN STORE<br>
+          <span data-mr="हडपसर, पुणे - ४१२३०७" data-hi="हडपसर, पुणे - ४१२३०७" data-en="Hadapsar, Pune - 412307">हडपसर, पुणे - ४१२३०७</span><br>
+          <span style="color:#2d6a4f; font-weight:600;" data-mr="📮 पिनकोड: ४१२३०७" data-hi="📮 पिनकोड: ४१२३०७" data-en="📮 Pincode: 412307">📮 पिनकोड: ४१२३०७</span>
+        </p>
+      </div>
+
+      <!-- Branches -->
+      <div style="background:#fff; border-radius:16px; padding:2rem; box-shadow:0 4px 20px rgba(0,0,0,0.06); text-align:left; border-top:4px solid #52b788;">
+        <div style="font-size:2rem; margin-bottom:1rem;">🏬</div>
+        <h3 style="color:#1b4332; font-size:1.2rem; font-weight:700; margin-bottom:1rem;" data-mr="आमच्या शाखा" data-hi="हमारी शाखाएं" data-en="Our Branches">आमच्या शाखा</h3>
+        <div style="display:flex; flex-direction:column; gap:0.8rem;">
+          <div style="display:flex; align-items:center; gap:0.8rem; background:#d8f3dc; border-radius:10px; padding:0.7rem 1rem;">
+            <span>🌆</span>
+            <div>
+              <div style="font-weight:700; color:#1b4332; font-size:0.95rem;" data-mr="पुणे शाखा" data-hi="पुणे शाखा" data-en="Pune Branch">पुणे शाखा</div>
+              <div style="color:#555; font-size:0.8rem;" data-mr="मुख्य कार्यालय" data-hi="मुख्य कार्यालय" data-en="Head Office">मुख्य कार्यालय</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.8rem; background:#d8f3dc; border-radius:10px; padding:0.7rem 1rem;">
+            <span>🌆</span>
+            <div>
+              <div style="font-weight:700; color:#1b4332; font-size:0.95rem;" data-mr="नाशिक शाखा" data-hi="नाशिक शाखा" data-en="Nashik Branch">नाशिक शाखा</div>
+              <div style="color:#555; font-size:0.8rem;" data-mr="नाशिक, महाराष्ट्र" data-hi="नाशिक, महाराष्ट्र" data-en="Nashik, Maharashtra">नाशिक, महाराष्ट्र</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.8rem; background:#d8f3dc; border-radius:10px; padding:0.7rem 1rem;">
+            <span>🌆</span>
+            <div>
+              <div style="font-weight:700; color:#1b4332; font-size:0.95rem;" data-mr="अहमदनगर शाखा" data-hi="अहमदनगर शाखा" data-en="Ahmednagar Branch">अहमदनगर शाखा</div>
+              <div style="color:#555; font-size:0.8rem;" data-mr="अहमदनगर, महाराष्ट्र" data-hi="अहमदनगर, महाराष्ट्र" data-en="Ahmednagar, Maharashtra">अहमदनगर, महाराष्ट्र</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="display:flex; flex-direction:column; gap:0.5rem; align-items:center;">
+      <p style="font-size:1rem; font-weight:700; color:#f4a261;">🌾 JAY BHARAT KIRAN STORE</p>
+      <p>हडपसर, पुणे | नाशिक | अहमदनगर</p>
+      <p>📞 <a href="tel:+918446006105" style="color:#b7e4c7; text-decoration:none;">+91 8446006105</a> &nbsp;|&nbsp; 📧 <a href="mailto:atharvakathale1212@gmail.com" style="color:#b7e4c7; text-decoration:none;">atharvakathale1212@gmail.com</a></p>
+      <p style="margin-top:0.5rem; color:#888; font-size:0.8rem;">© 2024 <span>KisanDirect</span> by <span>Atharva Kathale</span>. भारतीय शेतकऱ्यांसाठी ❤️</p>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    hamburger.addEventListener('click', () => navMenu.classList.toggle('open'));
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navMenu.classList.remove('open'));
+    });
+
+    // Language Toggle
+    function setLang(lang) {
+      // Update active button
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Update all elements with data attributes
+      document.querySelectorAll('[data-mr]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text) {
+          if (el.tagName === 'H1') {
+            el.innerHTML = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
