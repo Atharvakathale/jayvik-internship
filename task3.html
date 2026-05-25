@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JAY BHARAT KIRAN STORE - Online Order</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0faf4;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: #1b4332;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      color: #f4a261;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .logo span { color: #fff; font-size: 0.85rem; font-weight: 400; display: block; }
+
+    /* ── HERO BANNER ── */
+    .hero-banner {
+      background: linear-gradient(135deg, #2d6a4f, #52b788);
+      color: #fff;
+      text-align: center;
+      padding: 3rem 5%;
+    }
+
+    .hero-banner h1 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-banner p {
+      font-size: 1rem;
+      color: #d8f3dc;
+    }
+
+    /* ── MAIN CONTAINER ── */
+    .container {
+      max-width: 750px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── CART SECTION ── */
+    .cart-section {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .cart-section h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1b4332;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .products-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .product-item {
+      border: 2px solid #e8e8e8;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .product-item:hover { border-color: #2d6a4f; background: #f0faf4; }
+    .product-item.selected { border-color: #2d6a4f; background: #d8f3dc; }
+
+    .product-item .check {
+      position: absolute;
+      top: 8px; right: 8px;
+      width: 20px; height: 20px;
+      background: #2d6a4f;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 0.7rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-item.selected .check { display: flex; }
+
+    .product-emoji { font-size: 2rem; margin-bottom: 0.4rem; }
+    .product-name { font-size: 0.85rem; font-weight: 600; color: #1b4332; }
+    .product-price { font-size: 0.8rem; color: #f4a261; font-weight: 700; margin-top: 0.2rem; }
+
+    /* Quantity Controls */
+    .qty-control {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .product-item.selected .qty-control { display: flex; }
+
+    .qty-btn {
+      width: 24px; height: 24px;
+      background: #2d6a4f;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .qty-num { font-weight: 700; color: #1b4332; font-size: 0.9rem; min-width: 20px; text-align: center; }
+
+    /* Cart Summary */
+    .cart-summary {
+      background: #f0faf4;
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      display: none;
+    }
+
+    .cart-summary.show { display: block; }
+
+    .cart-summary h3 { font-size: 1rem; font-weight: 700; color: #1b4332; margin-bottom: 0.8rem; }
+
+    .cart-item-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #555;
+      padding: 0.3rem 0;
+      border-bottom: 1px dashed #ccc;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      color: #1b4332;
+      font-size: 1rem;
+      margin-top: 0.8rem;
+    }
+
+    /* ── ORDER FORM ── */
+    .form-section {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .form-section h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1b4332;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #444;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 0.85rem 1rem;
+      border: 2px solid #e8e8e8;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s;
+      background: #fafafa;
+      color: #333;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: #2d6a4f; background: #fff; }
+
+    .form-group input.error,
+    .form-group textarea.error,
+    .form-group select.error { border-color: #e63946 !important; background: #fff5f5; }
+
+    .form-group input.success,
+    .form-group textarea.success,
+    .form-group select.success { border-color: #2d6a4f; background: #f0faf4; }
+
+    .error-msg {
+      font-size: 0.78rem;
+      color: #e63946;
+      display: none;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .error-msg.show { display: flex; }
+
+    .success-tick {
+      font-size: 0.78rem;
+      color: #2d6a4f;
+      display: none;
+    }
+    .success-tick.show { display: block; }
+
+    /* Form Row */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: #2d6a4f;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .submit-btn:hover { background: #1b4332; transform: translateY(-2px); }
+    .submit-btn:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+
+    /* ── SUCCESS POPUP ── */
+    .success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .success-overlay.show { display: flex; }
+
+    .success-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      animation: popIn 0.4s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .success-icon { font-size: 4rem; margin-bottom: 1rem; }
+
+    .success-box h2 {
+      color: #1b4332;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .success-box p { color: #666; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
+
+    .order-id {
+      background: #f0faf4;
+      border-radius: 10px;
+      padding: 0.8rem;
+      font-weight: 700;
+      color: #2d6a4f;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .close-btn {
+      background: #2d6a4f;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.8rem 2rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background 0.3s;
+    }
+    .close-btn:hover { background: #1b4332; }
+
+    /* ── LIVE COUNTER ── */
+    .live-counter {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .counter-item h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #2d6a4f;
+    }
+
+    .counter-item p { color: #888; font-size: 0.8rem; margin-top: 0.2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1b4332;
+      color: #b7e4c7;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+      margin-top: 3rem;
+    }
+
+    footer span { color: #f4a261; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 500px) {
+      .form-row { grid-template-columns: 1fr; }
+      .products-list { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      🌾 JAY BHARAT KIRAN STORE
+      <span>हडपसर, पुणे | नाशिक | अहमदनगर</span>
+    </div>
+    <div style="color:#d8f3dc; font-size:0.85rem;">📞 +91 8446006105</div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero-banner">
+    <h1>🛒 Online Order करा</h1>
+    <p>ताजी उत्पादने थेट शेतातून तुमच्या दारी — 24 तासांत डिलिव्हरी!</p>
+  </div>
+
+  <div class="container">
+
+    <!-- LIVE COUNTER -->
+    <div class="live-counter">
+      <div class="counter-item">
+        <h3 id="ordersCount">0</h3>
+        <p>आजचे Orders</p>
+      </div>
+      <div class="counter-item">
+        <h3 id="customersCount">0</h3>
+        <p>आजचे ग्राहक</p>
+      </div>
+      <div class="counter-item">
+        <h3 id="deliveryCount">0</h3>
+        <p>डिलिव्हरी झाल्या</p>
+      </div>
+    </div>
+
+    <!-- PRODUCT SELECTION (DOM Manipulation) -->
+    <div class="cart-section">
+      <h2>🥦 उत्पादने निवडा</h2>
+      <div class="products-list">
+        <div class="product-item" onclick="toggleProduct(this, 'टोमॅटो', 30)" data-name="टोमॅटो" data-price="30">
+          <div class="check">✓</div>
+          <div class="product-emoji">🍅</div>
+          <div class="product-name">टोमॅटो</div>
+          <div class="product-price">₹30/किलो</div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(event, this, -1)">−</button>
+            <span class="qty-num">1</span>
+            <button class="qty-btn" onclick="changeQty(event, this, 1)">+</button>
+          </div>
+        </div>
+        <div class="product-item" onclick="toggleProduct(this, 'बटाटा', 25)" data-name="बटाटा" data-price="25">
+          <div class="check">✓</div>
+          <div class="product-emoji">🥔</div>
+          <div class="product-name">बटाटा</div>
+          <div class="product-price">₹25/किलो</div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(event, this, -1)">−</button>
+            <span class="qty-num">1</span>
+            <button class="qty-btn" onclick="changeQty(event, this, 1)">+</button>
+          </div>
+        </div>
+        <div class="product-item" onclick="toggleProduct(this, 'कांदा', 20)" data-name="कांदा" data-price="20">
+          <div class="check">✓</div>
+          <div class="product-emoji">🧅</div>
+          <div class="product-name">कांदा</div>
+          <div class="product-price">₹20/किलो</div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(event, this, -1)">−</button>
+            <span class="qty-num">1</span>
+            <button class="qty-btn" onclick="changeQty(event, this, 1)">+</button>
+          </div>
+        </div>
+        <div class="product-item" onclick="toggleProduct(this, 'आंबा', 120)" data-name="आंबा" data-price="120">
+          <div class="check">✓</div>
+          <div class="product-emoji">🥭</div>
+          <div class="product-name">आंबा</div>
+          <div class="product-price">₹120/किलो</div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(event, this, -1)">−</button>
+            <span class="qty-num">1</span>
+            <button class="qty-btn" onclick="changeQty(event, this, 1)">+</button>
+          </div>
+        </div>
+        <div class="product-item" onclick="toggleProduct(this, 'गहू', 40)" data-name="गहू" data-price="40">
+          <div class="check">✓</div>
+          <div class="product-emoji">🌾</div>
+          <div class="product-name">गहू</div>
+          <div class="product-price">₹40/किलो</div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(event, this, -1)">−</button>
+            <span class="qty-num">1</span>
+            <button class="qty-btn" onclick="changeQty(event, this, 1)">+</button>
+          </div>
+        </div>
+        <div class="product-item" onclick="toggleProduct(this, 'मका', 15)" data-name="मका" data-price="15">
+          <div class="check">✓</div>
+          <div class="product-emoji">🌽</div>
+          <div class="product-name">मका</div>
+          <div class="product-price">₹15/नग</div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(event, this, -1)">−</button>
+            <span class="qty-num">1</span>
+            <button class="qty-btn" onclick="changeQty(event, this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart Summary -->
+      <div class="cart-summary" id="cartSummary">
+        <h3>🛒 तुमची Cart</h3>
+        <div id="cartItems"></div>
+        <div class="cart-total">
+          <span>एकूण रक्कम:</span>
+          <span id="cartTotal">₹0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDER FORM (Form Validation - Task 3) -->
+    <div class="form-section">
+      <h2>📋 डिलिव्हरी माहिती भरा</h2>
+
+      <form id="orderForm" novalidate>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fullName">👤 पूर्ण नाव *</label>
+            <input type="text" id="fullName" placeholder="तुमचं नाव लिहा" />
+            <span class="error-msg" id="nameErr">⚠️ नाव किमान 2 अक्षरे असायला हवे</span>
+            <span class="success-tick" id="nameTick">✅ बरोबर!</span>
+          </div>
+          <div class="form-group">
+            <label for="phone">📞 फोन नंबर *</label>
+            <input type="tel" id="phone" placeholder="10 अंकी नंबर" maxlength="10" />
+            <span class="error-msg" id="phoneErr">⚠️ 10 अंकी नंबर टाका</span>
+            <span class="success-tick" id="phoneTick">✅ बरोबर!</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">📧 Email (optional)</label>
+          <input type="email" id="email" placeholder="तुमचा email (optional)" />
+          <span class="error-msg" id="emailErr">⚠️ बरोबर email टाका</span>
+          <span class="success-tick" id="emailTick">✅ बरोबर!</span>
+        </div>
+
+        <div class="form-group">
+          <label for="address">📍 डिलिव्हरी पत्ता *</label>
+          <textarea id="address" rows="3" placeholder="घर नंबर, गल्ली, गाव/शहर, पिनकोड लिहा..."></textarea>
+          <span class="error-msg" id="addressErr">⚠️ पूर्ण पत्ता लिहा (किमान 10 अक्षरे)</span>
+          <span class="success-tick" id="addressTick">✅ बरोबर!</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="branch">🏬 जवळची शाखा *</label>
+            <select id="branch">
+              <option value="">-- शाखा निवडा --</option>
+              <option value="pune">पुणे (हडपसर)</option>
+              <option value="nashik">नाशिक</option>
+              <option value="anagar">अहमदनगर</option>
+            </select>
+            <span class="error-msg" id="branchErr">⚠️ शाखा निवडा</span>
+            <span class="success-tick" id="branchTick">✅ बरोबर!</span>
+          </div>
+          <div class="form-group">
+            <label for="payment">💳 पेमेंट पद्धत *</label>
+            <select id="payment">
+              <option value="">-- पेमेंट निवडा --</option>
+              <option value="cod">Cash on Delivery</option>
+              <option value="upi">UPI / GPay</option>
+              <option value="card">Card</option>
+            </select>
+            <span class="error-msg" id="paymentErr">⚠️ पेमेंट पद्धत निवडा</span>
+            <span class="success-tick" id="paymentTick">✅ बरोबर!</span>
+          </div>
+        </div>
+
+        <!-- Cart Error -->
+        <div id="cartErr" style="display:none; color:#e63946; font-size:0.85rem; margin-bottom:1rem;">⚠️ किमान एक उत्पादन निवडा</div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          🛒 Order द्या
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+
+  <!-- SUCCESS POPUP -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-box">
+      <div class="success-icon">🎉</div>
+      <h2>Order दिला!</h2>
+      <p>तुमचा order यशस्वीरित्या नोंदवला गेला आहे. आमचे कर्मचारी लवकरच संपर्क करतील!</p>
+      <div class="order-id" id="orderIdBox"></div>
+      <p style="font-size:0.85rem; color:#888; margin-bottom:1rem;">📞 संपर्क: +91 8446006105</p>
+      <button class="close-btn" onclick="closeSuccess()">✅ ठीक आहे</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>🌾 <span>JAY BHARAT KIRAN STORE</span> | मालक: <span>Atharva Kathale</span> | 📞 +91 8446006105</p>
+    <p style="margin-top:0.3rem; font-size:0.8rem;">हडपसर, पुणे - 412307 | नाशिक | अहमदनगर</p>
+  </footer>
+
+  <!-- JAVASCRIPT (Task 3) -->
+  <script>
+
+    // ── LIVE COUNTER ANIMATION (DOM Manipulation) ──
+    function animateCounter(id, target, duration) {
+      let start = 0;
+      const step = target / (duration / 50);
+      const interval = setInterval(() => {
+        start += step;
+        if (start >= target) {
+          document.getElementById(id).textContent = target;
+          clearInterval(interval);
+        } else {
+          document.getElementById(id).textContent = Math.floor(start);
+        }
+      }, 50);
+    }
+
+    window.addEventListener('load', () => {
+      animateCounter('ordersCount', 47, 2000);
+      animateCounter('customersCount', 38, 2000);
+      animateCounter('deliveryCount', 31, 2000);
+    });
+
+    // ── CART (DOM Manipulation + Event Listeners) ──
+    let cart = {};
+
+    function toggleProduct(el, name, price) {
+      if (el.classList.contains('selected')) {
+        el.classList.remove('selected');
+        delete cart[name];
+      } else {
+        el.classList.add('selected');
+        cart[name] = { price: price, qty: 1 };
+      }
+      updateCart();
+    }
+
+    function changeQty(event, btn, change) {
+      event.stopPropagation();
+      const item = btn.closest('.product-item');
+      const qtyEl = item.querySelector('.qty-num');
+      const name = item.dataset.name;
+      const price = parseInt(item.dataset.price);
+      let qty = parseInt(qtyEl.textContent) + change;
+      if (qty < 1) qty = 1;
+      qtyEl.textContent = qty;
+      cart[name] = { price: price, qty: qty };
+      updateCart();
+    }
+
+    function updateCart() {
+      const summary = document.getElementById('cartSummary');
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+
+      if (Object.keys(cart).length === 0) {
+        summary.classList.remove('show');
+        return;
+      }
+
+      summary.classList.add('show');
+      let total = 0;
+      let html = '';
+
+      for (const [name, info] of Object.entries(cart)) {
+        const subtotal = info.price * info.qty;
+        total += subtotal;
+        html += `<div class="cart-item-row">
+          <span>${name} × ${info.qty} किलो</span>
+          <span>₹${subtotal}</span>
+        </div>`;
+      }
+
+      cartItems.innerHTML = html;
+      cartTotal.textContent = '₹' + total;
+    }
+
+    // ── REAL-TIME FORM VALIDATION (Event Listeners) ──
+    function showError(fieldId, errId, tickId, show) {
+      const field = document.getElementById(fieldId);
+      const err = document.getElementById(errId);
+      const tick = document.getElementById(tickId);
+      if (show) {
+        field.classList.add('error');
+        field.classList.remove('success');
+        err.classList.add('show');
+        tick.classList.remove('show');
+      } else {
+        field.classList.remove('error');
+        field.classList.add('success');
+        err.classList.remove('show');
+        tick.classList.add('show');
+      }
+    }
+
+    // Name validation
+    document.getElementById('fullName').addEventListener('input', function() {
+      showError('fullName', 'nameErr', 'nameTick', this.value.trim().length < 2);
+    });
+
+    // Phone validation
+    document.getElementById('phone').addEventListener('input', function() {
+      this.value = this.value.replace(/\D/g, '');
+      showError('phone', 'phoneErr', 'phoneTick', this.value.length !== 10);
+    });
+
+    // Email validation (optional)
+    document.getElementById('email').addEventListener('input', function() {
+      if (this.value === '') {
+        this.classList.remove('error', 'success');
+        document.getElementById('emailErr').classList.remove('show');
+        document.getElementById('emailTick').classList.remove('show');
+        return;
+      }
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
+      showError('email', 'emailErr', 'emailTick', !valid);
+    });
+
+    // Address validation
+    document.getElementById('address').addEventListener('input', function() {
+      showError('address', 'addressErr', 'addressTick', this.value.trim().length < 10);
+    });
+
+    // Branch validation
+    document.getElementById('branch').addEventListener('change', function() {
+      showError('branch', 'branchErr', 'branchTick', this.value === '');
+    });
+
+    // Payment validation
+    document.getElementById('payment').addEventListener('change', function() {
+      showError('payment', 'paymentErr', 'paymentTick', this.value === '');
+    });
+
+    // ── FORM SUBMIT (Event Listener) ──
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('fullName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const branch = document.getElementById('branch').value;
+      const payment = document.getElementById('payment').value;
+
+      let isValid = true;
+
+      // Validate all fields
+      if (name.length < 2) { showError('fullName', 'nameErr', 'nameTick', true); isValid = false; }
+      else showError('fullName', 'nameErr', 'nameTick', false);
+
+      if (phone.length !== 10) { showError('phone', 'phoneErr', 'phoneTick', true); isValid = false; }
+      else showError('phone', 'phoneErr', 'phoneTick', false);
+
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', 'emailErr', 'emailTick', true); isValid = false; }
+
+      if (address.length < 10) { showError('address', 'addressErr', 'addressTick', true); isValid = false; }
+      else showError('address', 'addressErr', 'addressTick', false);
+
+      if (!branch) { showError('branch', 'branchErr', 'branchTick', true); isValid = false; }
+      else showError('branch', 'branchErr', 'branchTick', false);
+
+      if (!payment) { showError('payment', 'paymentErr', 'paymentTick', true); isValid = false; }
+      else showError('payment', 'paymentErr', 'paymentTick', false);
+
+      // Cart check
+      if (Object.keys(cart).length === 0) {
+        document.getElementById('cartErr').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('cartErr').style.display = 'none';
+      }
+
+      if (isValid) {
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.textContent = '⏳ Order देत आहे...';
+
+        setTimeout(() => {
+          // Generate Order ID
+          const orderId = 'JBK' + Date.now().toString().slice(-6);
+          document.getElementById('orderIdBox').textContent = '📦 Order ID: ' + orderId;
+
+          // Build WhatsApp Message
+          let cartText = '';
+          let total = 0;
+          for (const [name, info] of Object.entries(cart)) {
+            const subtotal = info.price * info.qty;
+            total += subtotal;
+            cartText += `• ${name} × ${info.qty} किलो = ₹${subtotal}%0A`;
+          }
+
+          const branchNames = { pune: 'पुणे (हडपसर)', nashik: 'नाशिक', anagar: 'अहमदनगर' };
+          const paymentNames = { cod: 'Cash on Delivery', upi: 'UPI / GPay', card: 'Card' };
+
+          const msg = `🌾 *JAY BHARAT KIRAN STORE*%0A` +
+            `📦 *नवीन Order आली!*%0A%0A` +
+            `🆔 Order ID: ${orderId}%0A%0A` +
+            `👤 नाव: ${name}%0A` +
+            `📞 फोन: ${phone}%0A` +
+            `📧 Email: ${email || 'दिला नाही'}%0A%0A` +
+            `🛒 *उत्पादने:*%0A${cartText}` +
+            `💰 *एकूण: ₹${total}*%0A%0A` +
+            `📍 पत्ता: ${address}%0A` +
+            `🏬 शाखा: ${branchNames[branch]}%0A` +
+            `💳 पेमेंट: ${paymentNames[payment]}`;
+
+          // Open WhatsApp
+          window.open('https://wa.me/918446006105?text=' + msg, '_blank');
+
+          // Show success popup
+          document.getElementById('successOverlay').classList.add('show');
+
+          // Reset form
+          document.getElementById('orderForm').reset();
+          document.querySelectorAll('.product-item').forEach(el => el.classList.remove('selected'));
+          document.querySelectorAll('.qty-num').forEach(el => el.textContent = '1');
+          cart = {};
+          updateCart();
+          document.querySelectorAll('input, textarea, select').forEach(el => {
+            el.classList.remove('success', 'error');
+          });
+          document.querySelectorAll('.success-tick').forEach(el => el.classList.remove('show'));
+
+          btn.disabled = false;
+          btn.textContent = '🛒 Order द्या';
+
+          // Update counter
+          const current = parseInt(document.getElementById('ordersCount').textContent);
+          document.getElementById('ordersCount').textContent = current + 1;
+
+        }, 1500);
+      }
+    });
+
+    // Close success popup
+    function closeSuccess() {
+      document.getElementById('successOverlay').classList.remove('show');
+    }
+
+  </script>
+
+</body>
+</html>
