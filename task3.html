@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JAY BHARAT KIRAN STORE - Online Order</title>
+  <title>JAY KISAN STORE - Online Order</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -385,7 +385,7 @@
   <!-- HEADER -->
   <header>
     <div class="logo">
-      🌾 JAY BHARAT KIRAN STORE
+      🌾 JAY KISAN STORE
       <span>हडपसर, पुणे | नाशिक | अहमदनगर</span>
     </div>
     <div style="color:#d8f3dc; font-size:0.85rem;">📞 +91 8446006105</div>
@@ -415,7 +415,7 @@
       </div>
     </div>
 
-    <!-- PRODUCT SELECTION (DOM Manipulation) -->
+    <!-- PRODUCT SELECTION -->
     <div class="cart-section">
       <h2>🥦 उत्पादने निवडा</h2>
       <div class="products-list">
@@ -498,7 +498,7 @@
       </div>
     </div>
 
-    <!-- ORDER FORM (Form Validation - Task 3) -->
+    <!-- ORDER FORM -->
     <div class="form-section">
       <h2>📋 डिलिव्हरी माहिती भरा</h2>
 
@@ -584,14 +584,12 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>🌾 <span>JAY BHARAT KIRAN STORE</span> | मालक: <span>Atharva Kathale</span> | 📞 +91 8446006105</p>
+    <p>🌾 <span>JAY KISAN STORE</span> | मालक: <span>Atharva Kathale</span> | 📞 +91 8446006105</p>
     <p style="margin-top:0.3rem; font-size:0.8rem;">हडपसर, पुणे - 412307 | नाशिक | अहमदनगर</p>
   </footer>
 
-  <!-- JAVASCRIPT (Task 3) -->
   <script>
 
-    // ── LIVE COUNTER ANIMATION (DOM Manipulation) ──
     function animateCounter(id, target, duration) {
       let start = 0;
       const step = target / (duration / 50);
@@ -612,7 +610,6 @@
       animateCounter('deliveryCount', 31, 2000);
     });
 
-    // ── CART (DOM Manipulation + Event Listeners) ──
     let cart = {};
 
     function toggleProduct(el, name, price) {
@@ -666,7 +663,6 @@
       cartTotal.textContent = '₹' + total;
     }
 
-    // ── REAL-TIME FORM VALIDATION (Event Listeners) ──
     function showError(fieldId, errId, tickId, show) {
       const field = document.getElementById(fieldId);
       const err = document.getElementById(errId);
@@ -684,18 +680,15 @@
       }
     }
 
-    // Name validation
     document.getElementById('fullName').addEventListener('input', function() {
       showError('fullName', 'nameErr', 'nameTick', this.value.trim().length < 2);
     });
 
-    // Phone validation
     document.getElementById('phone').addEventListener('input', function() {
       this.value = this.value.replace(/\D/g, '');
       showError('phone', 'phoneErr', 'phoneTick', this.value.length !== 10);
     });
 
-    // Email validation (optional)
     document.getElementById('email').addEventListener('input', function() {
       if (this.value === '') {
         this.classList.remove('error', 'success');
@@ -707,22 +700,18 @@
       showError('email', 'emailErr', 'emailTick', !valid);
     });
 
-    // Address validation
     document.getElementById('address').addEventListener('input', function() {
       showError('address', 'addressErr', 'addressTick', this.value.trim().length < 10);
     });
 
-    // Branch validation
     document.getElementById('branch').addEventListener('change', function() {
       showError('branch', 'branchErr', 'branchTick', this.value === '');
     });
 
-    // Payment validation
     document.getElementById('payment').addEventListener('change', function() {
       showError('payment', 'paymentErr', 'paymentTick', this.value === '');
     });
 
-    // ── FORM SUBMIT (Event Listener) ──
     document.getElementById('orderForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
@@ -735,7 +724,6 @@
 
       let isValid = true;
 
-      // Validate all fields
       if (name.length < 2) { showError('fullName', 'nameErr', 'nameTick', true); isValid = false; }
       else showError('fullName', 'nameErr', 'nameTick', false);
 
@@ -753,7 +741,6 @@
       if (!payment) { showError('payment', 'paymentErr', 'paymentTick', true); isValid = false; }
       else showError('payment', 'paymentErr', 'paymentTick', false);
 
-      // Cart check
       if (Object.keys(cart).length === 0) {
         document.getElementById('cartErr').style.display = 'block';
         isValid = false;
@@ -767,11 +754,9 @@
         btn.textContent = '⏳ Order देत आहे...';
 
         setTimeout(() => {
-          // Generate Order ID
-          const orderId = 'JBK' + Date.now().toString().slice(-6);
+          const orderId = 'JKS' + Date.now().toString().slice(-6);
           document.getElementById('orderIdBox').textContent = '📦 Order ID: ' + orderId;
 
-          // Build WhatsApp Message
           let cartText = '';
           let total = 0;
           for (const [name, info] of Object.entries(cart)) {
@@ -783,7 +768,7 @@
           const branchNames = { pune: 'पुणे (हडपसर)', nashik: 'नाशिक', anagar: 'अहमदनगर' };
           const paymentNames = { cod: 'Cash on Delivery', upi: 'UPI / GPay', card: 'Card' };
 
-          const msg = `🌾 *JAY BHARAT KIRAN STORE*%0A` +
+          const msg = `🌾 *JAY KISAN STORE*%0A` +
             `📦 *नवीन Order आली!*%0A%0A` +
             `🆔 Order ID: ${orderId}%0A%0A` +
             `👤 नाव: ${name}%0A` +
@@ -795,13 +780,10 @@
             `🏬 शाखा: ${branchNames[branch]}%0A` +
             `💳 पेमेंट: ${paymentNames[payment]}`;
 
-          // Open WhatsApp
           window.open('https://wa.me/918446006105?text=' + msg, '_blank');
 
-          // Show success popup
           document.getElementById('successOverlay').classList.add('show');
 
-          // Reset form
           document.getElementById('orderForm').reset();
           document.querySelectorAll('.product-item').forEach(el => el.classList.remove('selected'));
           document.querySelectorAll('.qty-num').forEach(el => el.textContent = '1');
@@ -815,7 +797,6 @@
           btn.disabled = false;
           btn.textContent = '🛒 Order द्या';
 
-          // Update counter
           const current = parseInt(document.getElementById('ordersCount').textContent);
           document.getElementById('ordersCount').textContent = current + 1;
 
@@ -823,7 +804,6 @@
       }
     });
 
-    // Close success popup
     function closeSuccess() {
       document.getElementById('successOverlay').classList.remove('show');
     }
