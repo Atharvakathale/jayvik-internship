@@ -24,8 +24,7 @@
 
     /* ── DARK MODE ── */
     body.dark {
-      background-color: 
-      #000000;
+      background-color: #000000;
       color: #f0f0f0;
     }
 
@@ -35,7 +34,8 @@
 
     body.dark #about h2,
     body.dark #skills h2,
-    body.dark #projects h2 {
+    body.dark #projects h2,
+    body.dark #resume h2 {
       color: #f0f0f0;
     }
 
@@ -66,6 +66,15 @@
 
     body.dark .project-card p {
       color: #aaa;
+    }
+
+    body.dark #resume {
+      background-color: #111;
+    }
+
+    body.dark .resume-wrapper {
+      background-color: #1a1a1a;
+      border-color: #333;
     }
 
     /* ── TOGGLE BUTTON ── */
@@ -162,22 +171,49 @@
     #about {
       background-color: #fff;
       padding: 4rem 5%;
-      text-align: center;
     }
 
     #about h2 {
       font-size: 2rem;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       color: #1a1a2e;
+      text-align: center;
     }
 
-    #about p {
+    .about-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .about-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #e94560;
+      box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+      flex-shrink: 0;
+    }
+
+    .about-text {
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .about-text p {
       font-size: 1rem;
       color: #666;
-      max-width: 600px;
-      margin: 0 auto;
       line-height: 1.8;
+    }
+
+    body.dark .about-text p {
+      color: #aaa;
     }
 
     /* ── SKILLS SECTION ── */
@@ -238,8 +274,6 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 1.5rem;
-
-
     }
 
     .project-card {
@@ -264,6 +298,63 @@
       line-height: 1.6;
     }
 
+    /* ── RESUME SECTION ── */
+    #resume {
+      background-color: #f5f5f5;
+      padding: 4rem 5%;
+      text-align: center;
+    }
+
+    #resume h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1a1a2e;
+    }
+
+    #resume p {
+      color: #666;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    body.dark #resume p {
+      color: #aaa;
+    }
+
+    .resume-wrapper {
+      background-color: #fff;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 850px;
+      margin: 0 auto 1.5rem auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .resume-wrapper iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block;
+    }
+
+    .resume-download-btn {
+      display: inline-block;
+      background-color: #e94560;
+      color: #fff;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .resume-download-btn:hover {
+      background-color: #c73652;
+    }
+
     /* ── CONTACT SECTION ── */
     #contact {
       background-color: #1a1a2e;
@@ -280,7 +371,7 @@
 
     #contact p {
       color: #aaa;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.8rem;
       font-size: 1rem;
     }
 
@@ -331,6 +422,19 @@
         width: 100%;
         max-width: 400px;
       }
+
+      .about-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .about-text {
+        text-align: center;
+      }
+
+      .resume-wrapper iframe {
+        height: 400px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -345,6 +449,11 @@
       .skill-box {
         width: 120px;
         padding: 1rem;
+      }
+
+      .about-photo {
+        width: 150px;
+        height: 150px;
       }
     }
 
@@ -361,6 +470,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#resume">Resume</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -370,18 +480,23 @@
   <!-- HERO -->
   <section id="hero">
     <h1>Hi, I'm <span>Atharva Mahesh Kathale</span> 👋</h1>
-    <p>A Computer Science Student,Frontend Developer who loves building clean and beautiful websites.</p>
-    <a href="#contact 8446006105">Contact Me</a>
-  </section> 
+    <p>A Computer Science Student & Frontend Developer who loves building clean and beautiful websites.</p>
+    <a href="#contact">Contact Me</a>
+  </section>
 
   <!-- ABOUT -->
   <section id="about">
     <h2>About Me</h2>
-    <p>
-      I am a Computer Science student currently doing a Frontend Developer Internship at Jayvik Labs.
-      I enjoy learning new technologies and building projects that solve real problems.
-      HTML, CSS, and JavaScript are my primary skills and I am expanding into React.js.
-    </p>
+    <div class="about-content">
+      <img src="atharva.jpeg" alt="Atharva Kathale" class="about-photo" />
+      <div class="about-text">
+        <p>
+          I am a Computer Science student currently doing a Frontend Developer Internship at Jayvik Labs.
+          I enjoy learning new technologies and building projects that solve real problems.
+          HTML, CSS, and JavaScript are my primary skills and I am expanding into React.js.
+        </p>
+      </div>
+    </div>
   </section>
 
   <!-- SKILLS -->
@@ -430,16 +545,27 @@
     </div>
   </section>
 
+  <!-- RESUME -->
+  <section id="resume">
+    <h2>My Resume</h2>
+    <p>Preview my resume below or download it directly!</p>
+    <div class="resume-wrapper">
+      <iframe src="resume.pdf" title="Atharva Kathale Resume"></iframe>
+    </div>
+    <a href="resume.pdf" download="Atharva_Kathale_Resume.pdf" class="resume-download-btn">
+      📄 Download Resume
+    </a>
+  </section>
+
   <!-- CONTACT -->
- <section id="contact">
-  <h2>Contact Me</h2>
-  <p>Feel free to reach out for any opportunities or collaborations!</p>
-  <p>📞 <a href="tel:+918446006105">+91 8446006105</a></p>
-  <p>📧 <a href="mailto:atharvakathale1212@gmail.com">atharvakathale1212@gmail.com</a></p>
-  <p>🐙 <a href="https://github.com/Atharva kathale" target="_blank">github.com/Atharva kathale</a></p>
-  <p>💼 <a href="https://linkedin.com/in/Atharva Kathale" target="_blank">linkedin.com/in/Atharva  
-    athale</a></p>
-</section>
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>Feel free to reach out for any opportunities or collaborations!</p>
+    <p>📞 <a href="tel:+918446006105">+91 8446006105</a></p>
+    <p>📧 <a href="mailto:atharvakathale1212@gmail.com">atharvakathale1212@gmail.com</a></p>
+    <p>🐙 <a href="https://github.com/Atharvakathale" target="_blank">github.com/Atharvakathale</a></p>
+    <p>💼 <a href="https://linkedin.com/in/AtharvaKathale" target="_blank">linkedin.com/in/AtharvaKathale</a></p>
+  </section>
 
   <!-- FOOTER -->
   <footer>
